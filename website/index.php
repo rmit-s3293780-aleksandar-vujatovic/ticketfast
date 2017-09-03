@@ -1,7 +1,38 @@
+
 <?php
+session_start();
 
+$servername = getenv('IP');
+    $dbusername = getenv('C9_USER');
+    $dbpassword = "";
+    $database = "events_db";
+    $dbport = 3306;
+
+    // Create connection
+    $mysqli = new mysqli($servername, $dbusername, $dbpassword, $database, $dbport);
+
+    // Check connection
+  /*  if ($mysqli->connect_error) {
+        die("Connection failed: " . $mysqli->connect_error);
+    } 
+    echo "Connected successfully (".$mysqli->host_info.")"; */
+    
+    
+  $sql = "SELECT name, price, category, age, image FROM events";
+  $result = $mysqli->query($sql);
+    
+  /*  if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo "name: " . $row["name"]. " - price: " . $row["price"]. " " . $row["category"]. " " . $row["age"]. "<br>";
+        $eventName = $row["name"];
+    }
+} else {
+    echo "0 results";
+}*/
+
+    
 include 'includes/nav.php';
-
 ?>
   	<title>TicketFast | Home</title>
   <div class="container">                                                                                     
@@ -37,29 +68,22 @@ include 'includes/nav.php';
             </div>
           </div>
           </div>
-        <td>Event 2</td>
-        <td>Event 3</td>
-        <td>Event 4</td>
+        <?php
+            while($row = $result->fetch_assoc()) {
+            echo " <td>" . $row["name"]."</td>";
+            }
+        ?>
       </tr>
     </tbody>
-    <tbody>
-      <tr>
-        <td>Event 5</td>
-        <td>Event 6</td>
-        <td>Event 7</td>
-        <td>Event 8</td>
-      </tr>
-    </tbody>
+
   </table>
   </div>
   </div>
+  <?php
+include 'includes/footer.php';
+?>
   <?php include 'testModal.php';?>
   <script>
-   /* $(document).ready(function(){
-      $("#event1").click(function(){
-        $("#myModal").modal();
-      });
-    });*/
     
 $( ".close" ).click(function(){
   $(".modal").hide();
@@ -67,12 +91,7 @@ $( ".close" ).click(function(){
   </script>
 
  
-<?php
 
-include 'includes/footer.php';
-
-?>
- 
  
 
 

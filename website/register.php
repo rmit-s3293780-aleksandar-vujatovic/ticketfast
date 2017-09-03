@@ -33,24 +33,33 @@ $servername = getenv('IP');
         
         $email = $mysqli->real_escape_string($_POST['email']);
         $password = md5($_POST['password']); //md5 hashes password
+        $password2 = ($_POST['password']);
         $fname = ($_POST['fname']);
         $lname = ($_POST['lname']);
         $pref1 = ($_POST['pref1']);
         $pref2 = ($_POST['pref2']);
         $pref3 = ($_POST['pref3']);
+        $age = ($_POST['age']);
+        $userType = 'user';
         
         $_SESSION['username'] = $username;
+        $_SESSION['password'] = $password2;
         $_SESSION['fname'] = $fname;
         $_SESSION['lname'] = $lname;
+        $_SESSION['email'] = $email;
+        $_SESSION['pref1'] = $pref1;
+        $_SESSION['pref2'] = $pref2;
+        $_SESSION['pref3'] = $pref3;
         
-        $sql = "INSERT INTO users (username, email, fname, lname, password, pref1, pref2, pref3)"
-        . "VALUES ('$username', '$email', '$fname', '$lname', '$password', '$pref1', '$pref2', '$pref3')";
+        
+        $sql = "INSERT INTO users (username, email, fname, lname, password, pref1, pref2, pref3, age, userType)"
+        . "VALUES ('$username', '$email', '$fname', '$lname', '$password', '$pref1', '$pref2', '$pref3', '$age', '$userType')";
         
         //if query is successful, redirect to welcome
         
       if ($mysqli->query($sql) === true){
         $_SESSION['message'] = 'ADDED USER TO DATABASE';
-        header("location: welcome.php");
+        header("location: index.php");
       }
       else{
         $_SESSION['message'] = 'FAILED TO ADD';
@@ -65,11 +74,15 @@ include 'includes/nav.php';
 ?>
 
 
+<head>
 
-
-
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<title>TicketFast | Register</title>
 
+</head>
         <div style="width: 100%;">
   <form action="register.php" method="post">
     
@@ -105,6 +118,11 @@ include 'includes/nav.php';
       <input type="password" class="form-control" id="InputPassword1" name="confirmpassword" placeholder="Confirm Password" required>
   </div>
   
+   <div class="form-group">
+  <label for="datepicker">Date of Birth</label>
+  <input type="date" id="datepicker" class="form-control" name="datepicker" placeholder="Date of Birth" required>
+  </div>
+  
   <div class="form-group">
  <label for="pref1">Preferences</label>
       <select class="form-control" id="pref1" name="pref1" required>
@@ -137,16 +155,6 @@ include 'includes/nav.php';
         <option>Sports</option>
       </select>
   </div>
-  <!--<div class="form-group">
-    <label for="exampleSelect2">Preferences</label>
-    <select multiple class="form-control" id="exampleSelect2">
-      <option>1</option>
-      <option>2</option>
-      <option>3</option>
-      <option>4</option>
-      <option>5</option>
-    </select>
-  </div> -->
   
   <textarea rows="10" cols="75">
     Terms & Conditions
@@ -193,6 +201,23 @@ include 'includes/footer.php';
 </script>
 <?php endif; ?>
 
+  <script>
+  $( function() {
+    $( "#datepicker" ).datepicker({
+      changeMonth: true,
+      changeYear: true,
+      dateFormat: 'yy-mm-dd',
+      
+onSelect: function (date) {
+         var dob = new Date(date);
+         var today = new Date();
+         var age = today.getFullYear() - dob.getFullYear();
+         
+         $.post('register.php', {variable: age});
 
+        console.log(age);
+    }
 
-
+  });
+});
+  </script>
