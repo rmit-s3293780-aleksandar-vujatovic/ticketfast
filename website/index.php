@@ -42,17 +42,19 @@ include 'includes/nav.php';
       <tr>
         <th colspan="4"> 
           <form id="searchbox" action="">
-    				<input id="search" type="text" placeholder="Type here">
-    				<input id="submit" type="submit" value="Search">
+            <div>
+    				<input id="search" type="text" class="form-control" placeholder="Type here">
+    				<input id="submit" type="submit" class="btn btn-primary" value="Search">
+    				</div>
     			</form>	
         </th>
     	</tr>
     </thead>
     <tbody>
-      <tr>
-        <td>
-          <input type="image"src="Maroon5.jpg" width="200" height="300" id="modalbtn"></td>
-          <div class="modal fade" id="myModal1" role="dialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <!--<tr> -->
+        
+          <!--<td><input type="image"src="Maroon5.jpg" width="200" height="300" id="modalbtn"></td>-->
+        <!--<div class="modal fade" id="myModal1" role="dialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog" role="document">
             <div class="modeal-content">
               <div class="modal-header">
@@ -67,13 +69,21 @@ include 'includes/nav.php';
               </div>
             </div>
           </div>
-          </div>
+          </div> -->
+          <td><label>Name</label></td>
+          <td><label>Category</label></td>
+          <td><label>Price</label></td>
+          <td><label>Age (Minimum)</label></td>
         <?php
             while($row = $result->fetch_assoc()) {
-            echo " <td>" . $row["name"]."</td>";
+            echo "<tr><td>" . $row["name"]."</td>".
+                "<td>".$row["category"]."</td>".
+                "<td> $".$row["price"]."</td>".
+                "<td>".$row["age"]."</td>".
+                "</tr>";
             }
         ?>
-      </tr>
+     <!-- </tr> -->
     </tbody>
 
   </table>

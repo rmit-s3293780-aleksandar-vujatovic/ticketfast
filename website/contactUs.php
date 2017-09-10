@@ -6,7 +6,6 @@ include 'includes/nav.php';
 
  <title>TicketFast | Contact Us</title>
  
- 
   <form action="contactsent.php" method="post" name="form">
 	 
    <div class="form-group">
