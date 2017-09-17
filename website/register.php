@@ -6,7 +6,7 @@ $_SESSION['message'] = '';
 $servername = getenv('IP');
     $dbusername = getenv('C9_USER');
     $dbpassword = "";
-    $database = "users_db";
+    $database = "id2769518_testdb";
     $dbport = 3306;
 
     // Create connection
@@ -25,9 +25,9 @@ $servername = getenv('IP');
           
     $queryUser = mysql_query("SELECT username FROM users WHERE username= '$username'");
 
-      if(mysql_num_rows($queryUser)>=1){
+      /*if(mysql_num_rows($queryUser)>=1){
         $_SESSION['message'] = 'Username already exists!';
-      }else{
+      }else{*/
       if($_POST['password'] == $_POST['confirmpassword']){
         
         
@@ -69,7 +69,7 @@ $servername = getenv('IP');
         $_SESSION['message'] = 'Passwords don\'t match!';
       }
       }
-    }
+   // }
 include 'includes/nav.php';
 ?>
 

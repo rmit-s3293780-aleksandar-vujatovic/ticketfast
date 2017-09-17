@@ -4,7 +4,7 @@ session_start();
 $servername = getenv('IP');
     $dbusername = getenv('C9_USER');
     $dbpassword = "";
-    $database = "users_db";
+    $database = "id2769518_testdb";
     $dbport = 3306;
 
     // Create connection
@@ -45,11 +45,16 @@ if($count==1){
             $_SESSION["pref2"] = $row["pref2"];
             $_SESSION["pref3"] = $row["pref3"];
             $_SESSION["age"] = $row["age"];
+            $userType = $row["userType"];
                   
 }
-header("location:profile.php");
-}
-else {
-echo "Wrong Username or Password";
+    if($userType == 'user'){
+        header("location:profile.php");
+    }elseif($userType == 'admin'){
+        header("location:eventListAdmin.php");
+    }
+    }else{
+    $_SESSION['message'] = 'Wrong Username or Password';
+    header("location:" . $_SERVER['HTTP_REFERER']);
 }
 ?>

@@ -9,30 +9,30 @@
         <span class="close" onclick="closeWindow()">X</span>
     </div>
     <div>
-        <img src="Maroon5.jpg" height=230 width=165>
+       <?php echo '<img style="width:15em; height:17em;" src="data:image/jpeg;base64,'.base64_encode( $row['image'] ).'"/>'; ?>
     </div>
-    
-    <p class="desc">
-        Maroon 5 is an American pop rock band that originated in Los Angeles, California.[9][10] It currently consists of lead vocalist Adam Levine, 
-        keyboardist and rhythm guitarist Jesse Carmichael, bassist Mickey Madden, lead guitarist James Valentine, drummer Matt Flynn, and keyboardist PJ Morton.
-
-        Original members Adam Levine, Jesse Carmichael, Mickey Madden and drummer Ryan Dusick first came together as Kara's Flowers in 1994, while they were still in high school. 
-        The band self-released an album called We Like Digging?, then signed to Reprise Records and released the album The Fourth World in 1997. After the album garnered a tepid response, 
-        the band parted ways with the record label and the members attended college.
-        
-        
-    </p>
+     <?php // echo '<p class="desc">'.$row["description"].'</p>' ?>
     <div class="modal-footer">
         <h3>BOOK NOW</h3>
     </div>
-</div>      
+</div>    
+</div>
           <script>
               //get modal
               var Testmodal = document.getElementById('TheModalTest');
               //get button that opens modal
-              var modalbtn = document.getElementById('modalbtn');
+              //var modalbtn = document.getElementById('modalbtn');
+              var modalbtn = document.getElementsByClassName('modalBtn');
+              console.log("Length: " + modalbtn.length);
               //Open modal when btn click
-              modalbtn.onclick = function(){
+              for (var i = 0; i < modalbtn.length+1; i++ ) {
+                  console.log("I IS: " + i);
+
+                     modalbtn[i].onclick = function(){
+                    console.log("MODAL IS: " + modalbtn[i]);
                   Testmodal.style.display = "block";
+                 
               }
+        }
+
           </script>

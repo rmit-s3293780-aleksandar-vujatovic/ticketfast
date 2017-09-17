@@ -5,7 +5,7 @@ include 'includes/nav.php';
     $servername = getenv('IP');
     $dbusername = getenv('C9_USER');
     $dbpassword = "";
-    $database = "test_database";
+    $database = "id2769518_testdb";
     $dbport = 3306;
 
     // Create connection
@@ -38,11 +38,11 @@ include 'includes/nav.php';
 			 // Update the user's password
 			 $mysqli->query("UPDATE members SET password = '$password' WHERE email='$email'");
 
-        echo "Your password has been successfully reset.";
+        echo "<h3 style='text-align:center;'> Your password has been successfully reset.</h3>";
         } else
-            echo "Your password's do not match.";
+            echo "<h3 style='text-align:center;'> Your password's do not match.</h3>";
     } else
-		echo "Your password reset key is invalid.";
+		echo "<h3 style='text-align:center;'> Your password reset key is invalid.</h3>";
 }
 
 include 'includes/footer.php'

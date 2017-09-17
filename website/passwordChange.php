@@ -9,7 +9,7 @@ if (isset($_POST['forgotPass'])){
     $servername = getenv('IP');
     $dbusername = getenv('C9_USER');
     $dbpassword = "";
-    $database = "test_database";
+    $database = "id2769518_testdb";
     $dbport = 3306;
 
     // Create connection
@@ -35,13 +35,13 @@ if (isset($_POST['forgotPass'])){
 		$message = "To reset your password, please click the link below.\n\n" . $resetlink . "\n\n";
 	    mail($userExists["email"], "ticketfast.000webhostapp.com/ - Password Reset", $message);
 		
-		echo "We have emailed you a link to reset your password.";
+		echo "<h3 style='text-align:center;'> We have emailed you a link to reset your password.</h3>";
 
     } else {
-        echo "Email does not exist in system!";
+        echo "<h3 style='text-align:center;'> Sorry - it looks like your email does not exist in our system!</h3>";
     }
 } else {
-    echo 'Something went wrong.';
+    echo "<h3 style='text-align:center;'> Something went wrong. </h3>";
 }
 
 include 'includes/footer.php';
