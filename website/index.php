@@ -2,6 +2,8 @@
 <?php
 session_start();
 
+// Establish database connection  
+
 $servername = getenv('IP');
     $dbusername = getenv('C9_USER');
     $dbpassword = "";
@@ -18,9 +20,6 @@ $servername = getenv('IP');
     echo "Connected successfully (".$mysqli->host_info.")"; */
     
     
-  $sql = "SELECT * FROM events";
-  $result = $mysqli->query($sql);
-    
   /*  if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
@@ -32,104 +31,133 @@ $servername = getenv('IP');
 }*/
 
 
-//**********Search Function Shit********** 
+  // Search function
 
 $output = '';
+$dataResults = array();
 
 if(isset($_POST['search'])){
-  $_SESSION["searchSess"] = $_POST['search'];
   $searchq = $_POST['search'];
 
   $searchQuery = "SELECT * FROM events WHERE name LIKE '%$searchq%'";
   $searchResult = $mysqli->query($searchQuery);
   $count = mysqli_num_rows($searchResult);
-  if($count == 0){
+  if($count == 0 || $searchq == ''){
       $output = 'No matching events!';
+      $_SESSION['eventMsg'] = 'No matching events';
   }else{
-    while($eventRow = $searchResult->fetch_assoc()){
+    while(($eventRow = mysql_fetch_array($searchResult)) !== false){
       $ename = $eventRow['name'];
       $cat = $eventRow['category'];
       $cost = $eventRow['price'];
       $dob = $eventRow['age'];
       $poster = $eventRow['poster'];
+      
+      $_SESSION['ename'] = $eventRow['name'];
+      $_SESSION['cat'] = $eventRow['category'];
+      $_SESSION['cost'] = $eventRow['price'];
+      $_SESSION['dob'] = $eventRow['age'];
+      $_SESSION['poster'] = $eventRow['poster'];
+
+      $dataResults[] = $eventRow;
+      
+      }
 
       $output .='<div> '.$ename.' '.$cat.' '.$cost.' '.$dob.' '.$poster.'</div>';
     }
+    header("location: searchResults.php");
   }
+
+//**********Search Function**********
+
+//**************ALGORITHM**************
+if($_SESSION['username'] != ''){
+  $pref1 = $_SESSION['pref1'];
+  $pref2 = $_SESSION['pref2'];
+  $pref3 = $_SESSION['pref3'];
+  $age = $_SESSION['age'];
+  $sql = "SELECT * FROM events WHERE ( category = '$pref1' OR category = '$pref2' OR category = '$pref3') AND age <= '$age'";
+  $result = $mysqli->query($sql);
+}else{
+  $sql = "SELECT * FROM events";
+  $result = $mysqli->query($sql);
 }
-//**********Search Function Shit**********
+
 
 
 include 'includes/nav.php';
 ?>
+
+
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	
   	<title>TicketFast | Home</title>
-  <div class="container">                                                                                     
-  <div class="table-responsive">          
-  <table class="table">
-  	<thead>
-      <tr>
-        <th colspan="4"> 
-           
-           <form id="searchbox" action="searchResults.php" method="post">
+  
+  <!-- Search bar -->
+  
+  <form id="searchbox" action="index.php" method="post">
             <div>
     				<input name="search" type="text" class="form-control" placeholder="Search for event or category">
-    				<input id="submit" type="submit" class="btn btn-primary" value="Search">
     				</div>
-    			</form>	
-
-          <?php print("$output");?>
-
-        </th>
-    	</tr>
-    </thead>
-    <tbody>
-      <!--<tr> -->
-        
-          <!--<td><input type="image"src="Maroon5.jpg" width="200" height="300" id="modalbtn"></td>-->
-        <!--<div class="modal fade" id="myModal1" role="dialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-            <div class="modeal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="modal">&times;</button>
-                  <h1 class="modal-tittle" id="myModalLabel">Maroon 5 Comes Down Under </h1>
-              </div>
-              <div class="modal-body">
-                <p>Maroon 5 comes back down under in 2017. More information to be released nearing event. Register to TicketFast to receive notification on event.</p>
-              </div>
-              <div class="model-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-          </div> -->
-          <td><label>Name</label></td>
-          <td><label>Category</label></td>
-          <td><label>Price</label></td>
-          <td><label>Age (Minimum)</label></td>
-            <?php
-               while($row = $result->fetch_assoc()) {
-                include 'testModal.php';
-                echo '<tr><td><figure><figcaption style="padding-bottom:20px">' . $row['name'].'</figcaption>'.
-                    '<img data-content="'.$row['description'].'" class="modalBtn" style="width:15em; height:17em;" src="data:image/jpeg;base64,'.base64_encode( $row['image'] ).'"/></figure></td>'.
-                    '<td>'.$row['category'].'</td>'.
-                    '<td> $'.$row['price'].'</td>'.
-                    '<td>'.$row['age'].'</td>'.
-                    '</tr>';
-                }
-            ?>
-     <!-- </tr> -->
-    </tbody>
-
-  </table>
-  </div>
-  </div>
-  
-  
-  <style>
-    td{
-      width:20em;
-    }
-  </style>
+    				<input id="submit" type="submit" class="btn btn-primary" value="Search">
+    			</form>
+    			
+    			
+            <div class="container">
+        <div class="row">
+    <?php
+        if (mysqli_num_rows($result) > 0) {
+            // output data of each row
+            while($row = mysqli_fetch_assoc($result)) {
+    ?>
+                     <div class="col-lg-3" style="margin-top:40px;">
+                       <h4 class="modal-title"><?php echo $row['name']; ?></h4>
+                         <a href="#" data-toggle="modal" data-target="#<?php echo $row["event_id"]; ?>"><img src="data:image/jpeg;base64,<?php echo base64_encode($row["image"]); ?>" class="img-responsive"></a>
+                     </div>
+                     <!-- Modal -->
+                      <div class="modal fade" id="<?php echo $row["event_id"]; ?>" role="dialog">
+                        <div class="modal-dialog">
+                        
+                          <!-- Modal content-->
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title"><?php echo $row["name"] ?></h4>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                  <div class="col-lg-6">
+                                      <img src="data:image/jpeg;base64,<?php echo base64_encode($row["image"]); ?>" class="img-responsive">
+                                  </div>
+                                  <div class="col-lg-6">
+                                      <h5><?php echo $row["description"] ?><h5>
+                                  </div>
+                                  <div class="col-lg-6">
+                                      <h5>Price: <?php echo $row["price"] ?><h5>
+                                  </div>
+                                    <div class="col-lg-6">
+                                      <h5>Minimum Age: <?php echo $row["age"] ?><h5>
+                                  </div>
+                                  <div class="col-lg-6">
+                                      <h5>Category: <?php echo $row["category"] ?><h5>
+                                  </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                          
+                        </div>
+                      </div>		
+                          <?php
+                  }
+        } else {
+            echo "0 results";
+        }
+    ?>
+                      </div>
+                      </div>
   
   <?php
 include 'includes/footer.php';
@@ -141,6 +169,8 @@ $( ".close" ).click(function(){
   $(".modal").hide();
 });
   </script>
+
+
 
 </body>
 </html>

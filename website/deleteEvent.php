@@ -2,7 +2,7 @@
 <?php
 session_start();
 
-
+// Establish connection
 
 $servername = getenv('IP');
     $dbusername = getenv('C9_USER');
@@ -12,6 +12,8 @@ $servername = getenv('IP');
 
     // Create connection
     $mysqli = new mysqli($servername, $dbusername, $dbpassword, $database, $dbport);
+
+    // Delete events
 
 $id = $_GET['event_id'];
 

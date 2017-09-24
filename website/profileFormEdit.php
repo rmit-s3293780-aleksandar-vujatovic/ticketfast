@@ -8,7 +8,7 @@
                             </div>
                             <div class="form-group">
                               <label for="InputPassword">Password</label>
-                              <input type="password" class="form-control" id="InputPassword" name="password" value="<?- $_SESSION['password']?>" pattern = "(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required>
+                              <input type="password" class="form-control" id="InputPassword" name="password" value="<?= $_SESSION['password']?>" pattern = "(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" required>
                               <small id="passwordHelp" class="form-text text-muted">Password must contain at least 8 Characters (UpperCase, LowerCase, Number/SpecialCharacter).</small>
                             </div>
                             <div class="form-group">

@@ -23,7 +23,7 @@ $servername = getenv('IP');
       //passwords match
           $username = $mysqli->real_escape_string($_POST['username']);
           
-    $queryUser = mysql_query("SELECT username FROM users WHERE username= '$username'");
+    //$queryUser = mysql_query("SELECT username FROM users WHERE username= '$username'");
 
       /*if(mysql_num_rows($queryUser)>=1){
         $_SESSION['message'] = 'Username already exists!';
@@ -83,8 +83,10 @@ include 'includes/nav.php';
 	<title>TicketFast | Register</title>
 
 </head>
-        <div style="width: 100%;">
-  <form action="register.php" method="post">
+
+    <!-- Registration form -->
+    <div style="width: 100%;">
+    <form action="register.php" method="post">
     
     <div class="visible alert alert-danger alert-dismissable fade in">
       <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -119,9 +121,11 @@ include 'includes/nav.php';
   </div>
   
    <div class="form-group">
-  <label for="datepicker">Date of Birth</label>
-  <input type="date" id="datepicker" class="form-control" name="datepicker" placeholder="Date of Birth" required>
+  <label for="datepicker">Age:</label>
+  <input type="number" id="age" class="form-control" name="age" placeholder="Age" required>
   </div>
+  
+  <!-- Preference list -->
   
   <div class="form-group">
  <label for="pref1">Preferences</label>
@@ -155,6 +159,8 @@ include 'includes/nav.php';
         <option>Sports</option>
       </select>
   </div>
+  
+  <!-- Terms and conditions -->
   
   <textarea rows="10" cols="75">
     Terms & Conditions

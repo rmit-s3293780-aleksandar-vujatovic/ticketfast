@@ -3,6 +3,9 @@
 include 'includes/nav.php';
 
 
+
+//Establish connection
+
 if (isset($_POST['forgotPass'])){
     
 
@@ -30,10 +33,12 @@ if (isset($_POST['forgotPass'])){
 
 		// Create a url which we will direct them to reset their password
 		$resetlink = "@@@@@@@@@@@@@@@@@@@@@   HOSTING WEBSITE  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@/passwordResetForm.php?link=".$password;
-		
-		//Email reset link
+
+        //Email reset link
 		$message = "To reset your password, please click the link below.\n\n" . $resetlink . "\n\n";
 	    mail($userExists["email"], "ticketfast.000webhostapp.com/ - Password Reset", $message);
+		
+		// email link to reset password, else error prompt shown
 		
 		echo "<h3 style='text-align:center;'> We have emailed you a link to reset your password.</h3>";
 
@@ -47,3 +52,70 @@ if (isset($_POST['forgotPass'])){
 include 'includes/footer.php';
 
 ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

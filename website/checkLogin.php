@@ -1,6 +1,8 @@
 <?php
 
 session_start();
+
+// Establish connection
 $servername = getenv('IP');
     $dbusername = getenv('C9_USER');
     $dbpassword = "";

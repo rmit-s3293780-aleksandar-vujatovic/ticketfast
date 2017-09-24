@@ -4,6 +4,9 @@ include 'includes/nav.php';
 
 ?>
   	<title>TicketFast | About Us</title>
+  	
+  	<!-- About Us information -->
+  	
   <article>
     <div id="aboutUs">
         <p1>At TicketFast, we utilise modern day technology to ensure that our customers are presented with the most accurate events 

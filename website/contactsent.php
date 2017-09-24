@@ -19,6 +19,7 @@ include 'includes/nav2.php';
 		$name = $_POST['name'];
 		$email = $_POST['email'];
 		$subject = $_POST['subject'];
+		$othersubject = $_POST['othersubject'];
 		$msg = $_POST['message'];
 		
 		//ticketfast admin email
@@ -45,6 +46,8 @@ include 'includes/nav2.php';
 		mail($email, $subject2, $content2);
 		
 		}
+		
+		//print if error
 		else{
 			echo "You have reached this page in error.";
 		}

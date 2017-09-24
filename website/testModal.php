@@ -9,14 +9,14 @@
         <span class="close" onclick="closeWindow()">X</span>
     </div>
     <div>
-       <?php echo '<img style="width:15em; height:17em;" src="data:image/jpeg;base64,'.base64_encode( $row['image'] ).'"/>'; ?>
+       <?php echo '<img class="Desc" style="width:15em; height:17em;" src="data:image/jpeg;base64,'.base64_encode( $printArray['image'] ).'"/>'; ?>
     </div>
-     <?php // echo '<p class="desc">'.$row["description"].'</p>' ?>
+     <?php echo '<p class="desc">'.$printArray["description"].'</p>' ?>
     <div class="modal-footer">
         <h3>BOOK NOW</h3>
     </div>
 </div>    
-</div>
+</div> 
           <script>
               //get modal
               var Testmodal = document.getElementById('TheModalTest');
@@ -25,8 +25,8 @@
               var modalbtn = document.getElementsByClassName('modalBtn');
               console.log("Length: " + modalbtn.length);
               //Open modal when btn click
-              for (var i = 0; i < modalbtn.length+1; i++ ) {
-                  console.log("I IS: " + i);
+              for (var i = 1; i <= modalbtn.length; i++ ) {
+                 // console.log("I IS: " + i);
 
                      modalbtn[i].onclick = function(){
                     console.log("MODAL IS: " + modalbtn[i]);

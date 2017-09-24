@@ -92,3 +92,25 @@ textarea {
 #home {
   display:none;
 }
+
+.loginForm{
+  display: block;
+}
+
+.loggedIn{
+  display: none; /*hidden by default */
+}
+    
+.fp{
+  inline-size: -webkit-fill-available;
+  text-align: right;
+  padding-right: 4.8%;
+}
+
+.register{
+  display:block;
+}
+    
+.eventtd {
+  width:20em;
+}

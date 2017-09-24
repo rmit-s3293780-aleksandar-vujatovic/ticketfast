@@ -39,8 +39,8 @@ $servername = getenv('IP');
         . "VALUES ('$name', '$category', '$price', '$age', '{$image}', '$description', '{$imagename}')";
         
       if ($mysqli->query($sql) === true){
-        $_SESSION['message'] = 'ADDED USER TO DATABASE';
-        header("location: eventListAdmin.php");
+        $_SESSION['message'] = 'ADDED EVENT TO DATABASE';
+        header("location: addEvent.php");
       }
       else{
         $_SESSION['message'] = 'FAILED TO ADD';
@@ -60,6 +60,7 @@ include 'includes/adminnav.php';
 	<title>TicketFast | Add Event</title>
 
 </head>
+<?php echo $_SESSION['message']; ?>
         <div style="width: 100%;">
   <form action="addEvent.php" method="post" enctype="multipart/form-data">
             

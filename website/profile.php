@@ -37,15 +37,19 @@ $servername = getenv('IP');
         $sql = "UPDATE users SET email='$email', password='$password', pref1='$pref1', pref2='$pref2', pref3='$pref3' WHERE username='$username'";
         
       if ($mysqli->query($sql) === true){
-        $_SESSION['message'] = 'ADDED USER TO DATABASE';
+        $_SESSION['message'] = 'UPDATED USER TO DATABASE';
         header("location: profile.php");
+        
+        echo "<script> console.log('USER ADDED'); </script>";
       }
       else{
         $_SESSION['message'] = 'FAILED TO ADD';
+        echo "<script> console.log('FAILED TO ADD'); </script>";
       }
         
       }else{
         $_SESSION['message'] = 'Passwords don\'t match!';
+        echo "<script> console.log('PASSWORDS DONT MATCH'); </script>";
       }
       }
         

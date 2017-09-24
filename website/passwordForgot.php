@@ -3,7 +3,7 @@ include 'includes/nav.php';
 ?>
 
 
-
+<!-- Enter email and submit for password reset form -->
 <form action="passwordChange.php" method="post" name="form">
     <div class="form-group">
         <label>Email address:</label>

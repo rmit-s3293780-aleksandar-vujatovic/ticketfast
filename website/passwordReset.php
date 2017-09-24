@@ -32,11 +32,10 @@ include 'includes/nav.php';
          
         if ($password == $confirmpassword){
              
-			 //has and secure the password
-    $password = hash('MD5', $code.$password);
-
-			 // Update the user's password
-			 $mysqli->query("UPDATE members SET password = '$password' WHERE email='$email'");
+			//has and secure the password
+            $password = hash('MD5', $code.$password);
+            // Update the user's password
+			$mysqli->query("UPDATE members SET password = '$password' WHERE email='$email'");
 
         echo "<h3 style='text-align:center;'> Your password has been successfully reset.</h3>";
         } else
@@ -48,3 +47,4 @@ include 'includes/nav.php';
 include 'includes/footer.php'
 
 ?>
+    
