@@ -34,7 +34,7 @@ include 'includes/nav.php';
              
 			//has and secure the password
             $password = hash('MD5', $code.$password);
-            // Update the user's password
+            //Update the user's password
 			$mysqli->query("UPDATE members SET password = '$password' WHERE email='$email'");
 
         echo "<h3 style='text-align:center;'> Your password has been successfully reset.</h3>";

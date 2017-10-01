@@ -72,7 +72,7 @@ include 'includes/nav.php';
             <!-- Nav tabs -->
             <ul class="nav nav-tabs tabs-left">
                 <li class="active"><a href="#profile" data-toggle="tab">Personal Details</a></li>
-                <li><a href="#messages" data-toggle="tab">Purchase History</a></li>
+                <!--<li><a href="#messages" data-toggle="tab">Purchase History</a></li>-->
                 <li><a href="#settings" data-toggle="tab">Settings</a></li>
             </ul>
         </div>
@@ -88,19 +88,16 @@ include 'includes/nav.php';
                     <?php include 'profileFormEdit.php'; ?>
                     <!-- INSERT ABOVE HERE -->
                     </div>
-                <div class="tab-pane" id="messages">
+               <!-- <div class="tab-pane" id="messages">
                     <label>Purchase History</label></br>
-                    <div>
-                         All purchases
+                    <div> -->
                         
-                        <!-- _____________________
-                            Aleks
-                            ______________________
-                        
-                        -->
+                    <!-- PURCHASE HISTORY -->
+                    
+ 
                        
-                    </div>
-                </div>
+                <!--    </div>
+                </div> -->
                 <div class="tab-pane" id="settings">
                   <label>Settings</label></br>
                     <div>

@@ -20,7 +20,7 @@ if (isset($_POST['forgotPass'])){
 
     $email = $mysqli->real_escape_string($_POST["email"]);
 
-    $data = $mysqli->query("SELECT id FROM members WHERE email='$email'");
+    $data = $mysqli->query("SELECT id FROM users WHERE email='$email'");
 
     //check is user exists
     if ($data->num_rows > 0) {

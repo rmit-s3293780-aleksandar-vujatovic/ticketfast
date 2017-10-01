@@ -136,7 +136,12 @@ include 'includes/nav.php';
                                       <h5>Price: <?php echo $row["price"] ?><h5>
                                   </div>
                                     <div class="col-lg-6">
-                                      <h5>Minimum Age: <?php echo $row["age"] ?><h5>
+                                      <h5>Minimum Age: <?php 
+                                      if($row["age"] != 0){
+                                      echo $row["age"];
+                                      }else{
+                                      echo "No Minimum Age";
+                                      }?><h5>
                                   </div>
                                   <div class="col-lg-6">
                                       <h5>Category: <?php echo $row["category"] ?><h5>
@@ -144,7 +149,10 @@ include 'includes/nav.php';
                               </div>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                              <form method="post" action="purchaseEvent.php">
+                                <input type="hidden" name="value" value="<?php echo $row["event_id"];?>">
+                                <input type="submit" class="btn btn-danger" name="submit" value="Purchase">
+                              </form>
                             </div>
                           </div>
                           
@@ -162,15 +170,5 @@ include 'includes/nav.php';
   <?php
 include 'includes/footer.php';
 ?>
-  <!--<?//php include 'testModal.php';?> -->
-  <script>
-    
-$( ".close" ).click(function(){
-  $(".modal").hide();
-});
-  </script>
-
-
-
 </body>
 </html>
