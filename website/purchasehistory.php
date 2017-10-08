@@ -1,21 +1,9 @@
-<html>
-<head>
-<title>purchase history</title>
-<style type = "text/css">
-table {
 
-	background-color: #e0e0e0;
-	}
+    <?php include 'includes/nav.php'; ?>
 
-th {
-	border-bottom: 4px solid #000;
-	}
-	
-td {
-	border-bottom: 2px solid #666;
-	}
-</style>
-</head>
+<title>TicketFast | Purchase History</title>
+
+
 
 <body>
 
@@ -24,7 +12,6 @@ td {
 <?php
 session_start();
 
-include 'includes/nav.php';
 
     $servername = getenv('IP');
     $dbusername = getenv('C9_USER');
@@ -60,16 +47,18 @@ include 'includes/nav.php';
 
     //query using value variable from above
     $sqlget = $mysqli->query("SELECT e.name, e.price, h.date FROM events e JOIN history h ON e.event_id = h.event_id WHERE id = $value");
+    ?>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
     
-    echo "<br>";
-	echo "<br>";
-	echo "<br>";
-	echo "<br>";
-	echo "<br>";
     
-    echo "<table>";
-    echo "<tr><th>Event Name</th><th>Price</th><th>Date Purchased</th></tr>";
-
+    <table class="table table-striped
+    ">
+    <tr><th>Event Name</th><th>Price</th><th>Date Purchased</th></tr>
+<?php
     while ($row = mysqli_fetch_array($sqlget)) {
 	    echo "<tr><td>";
 	    echo $row['name'];//CHANGE THESE VARIABLES ACCORDING TO QUERY
@@ -78,17 +67,33 @@ include 'includes/nav.php';
 	    echo "</td><td>";
     	echo $row['date'];
     	echo "</td></tr>";
-        }
-        
-    echo "</table>";
+        };
+        ?>
+    </table>
 	
-	echo "<br>";
-	echo "<br>";
-	echo "<br>";
-	echo "<br>";
-	echo "<br>";
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
 
-
+<?php
 include 'includes/footer.php';
 
 ?>
+
+
+<style type = "text/css">
+table {
+
+	background-color: #e0e0e0;
+	}
+
+th {
+	border-bottom: 4px solid #000;
+	}
+	
+td {
+	border-bottom: 2px solid #666;
+	}
+</style>

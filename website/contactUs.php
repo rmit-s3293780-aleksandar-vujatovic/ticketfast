@@ -3,7 +3,6 @@ session_start();
 include 'includes/nav.php';
 ?>
 
-
  <title>TicketFast | Contact Us</title>
  
  <!-- Contact form -->
@@ -63,4 +62,3 @@ include 'includes/footer.php';
 
 </body>
 </html>
-

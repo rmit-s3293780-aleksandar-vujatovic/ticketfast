@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-
+$_SESSION['checkLogin'] = '';
 // Establish connection
 $servername = getenv('IP');
     $dbusername = getenv('C9_USER');
@@ -56,7 +56,7 @@ if($count==1){
         header("location:eventListAdmin.php");
     }
     }else{
-    $_SESSION['message'] = 'Wrong Username or Password';
+    $_SESSION['loginError'] = 'Wrong Username or Password';
     header("location:" . $_SERVER['HTTP_REFERER']);
 }
 ?>

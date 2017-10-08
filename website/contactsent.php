@@ -14,8 +14,10 @@ include 'includes/nav2.php';
 
 <?php
 
+	//if statement that checks if the submit button was clicked
 	if(isset($_POST['submit'])){
-		//variables for psot array
+		
+		//variables for post array
 		$name = $_POST['name'];
 		$email = $_POST['email'];
 		$subject = $_POST['subject'];
@@ -42,7 +44,7 @@ include 'includes/nav2.php';
 		    echo "<h5 style='text-align:center;'>If you have not been redirected, please click <a href='index.php'>here</a></h5>";
 		
 		
-		//Confirmation Email
+		//Confirmation Email to sender
 		mail($email, $subject2, $content2);
 		
 		}

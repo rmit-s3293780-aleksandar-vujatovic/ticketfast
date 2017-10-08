@@ -16,7 +16,7 @@ $servername = getenv('IP');
     } 
     echo "Connected successfully (".$mysqli->host_info.")"; */
     
-    //$queryUser = echo "SELECT username FROM users WHERE username = \"$username\"\;";
+    //If user has edited any information
             if ($_SERVER['REQUEST_METHOD'] == 'POST'){
               if($_POST['password'] == $_POST['confirmpassword']){
         $email = $mysqli->real_escape_string($_POST['email']);
@@ -88,26 +88,12 @@ include 'includes/nav.php';
                     <?php include 'profileFormEdit.php'; ?>
                     <!-- INSERT ABOVE HERE -->
                     </div>
-               <!-- <div class="tab-pane" id="messages">
-                    <label>Purchase History</label></br>
-                    <div> -->
-                        
-                    <!-- PURCHASE HISTORY -->
-                    
- 
-                       
-                <!--    </div>
-                </div> -->
                 <div class="tab-pane" id="settings">
                   <label>Settings</label></br>
                     <div>
                          <div class="form-check">
-                              <input type="checkbox" class="form-check-input">
-                              Auto Login
+                             <?php echo "<td><a href='deleteAccount.php?username=".$username."'>DELETE ACCOUNT</a></td>" ?>
                           </div>
-                        <div>
-                           <button type="submit" class="btn btn-primary">Save</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -149,7 +135,7 @@ include 'includes/footer.php';
    /* <button id="passwordHidden" name="password" class="passHidden">Click to show</button>
                                  <text id="passwordShow" name="password" class="passShow"><?= $_SESSION['password']?></text> */
                                  
-                                 
+            //Hold to show password functionality                                 
               var passHidden = document.getElementById('passwordHidden');
               var passShow = document.getElementById('passwordShow');
             passHidden.onmousedown = function() {
@@ -160,6 +146,7 @@ include 'includes/footer.php';
                   passShow.style.display = "none";
                 }
 
+            //Save/Edit button hidden/displayed
               var saveBtn = document.getElementById('saveButton');
               var editBtn = document.getElementById('editButton');
               var noEditForm = document.getElementById('noEditForm');

@@ -19,75 +19,34 @@ $servername = getenv('IP');
     } 
     echo "Connected successfully (".$mysqli->host_info.")"; */
     
-    
-  /*  if ($result->num_rows > 0) {
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-        echo "name: " . $row["name"]. " - price: " . $row["price"]. " " . $row["category"]. " " . $row["age"]. "<br>";
-        $eventName = $row["name"];
-    }
-} else {
-    echo "0 results";
-}*/
+//*****SEARCH*******
 
-
-  // Search function
-
-$output = '';
-$dataResults = array();
-
+//Check if search is posted
 if(isset($_POST['search'])){
-  $searchq = $_POST['search'];
+  $searchq = $_POST['search']; //assign searched query to variable
+  $_SESSION['searchQuery'] = $searchq; // pass variable into session variable for searchResults.php page
 
-  $searchQuery = "SELECT * FROM events WHERE name LIKE '%$searchq%'";
-  $searchResult = $mysqli->query($searchQuery);
-  $count = mysqli_num_rows($searchResult);
-  if($count == 0 || $searchq == ''){
-      $output = 'No matching events!';
-      $_SESSION['eventMsg'] = 'No matching events';
-  }else{
-    while(($eventRow = mysql_fetch_array($searchResult)) !== false){
-      $ename = $eventRow['name'];
-      $cat = $eventRow['category'];
-      $cost = $eventRow['price'];
-      $dob = $eventRow['age'];
-      $poster = $eventRow['poster'];
-      
-      $_SESSION['ename'] = $eventRow['name'];
-      $_SESSION['cat'] = $eventRow['category'];
-      $_SESSION['cost'] = $eventRow['price'];
-      $_SESSION['dob'] = $eventRow['age'];
-      $_SESSION['poster'] = $eventRow['poster'];
-
-      $dataResults[] = $eventRow;
-      
-      }
-
-      $output .='<div> '.$ename.' '.$cat.' '.$cost.' '.$dob.' '.$poster.'</div>';
-    }
-    header("location: searchResults.php");
+    header("location: searchResults.php"); //redirect to searchResults.php page
   }
 
-//**********Search Function**********
-
 //**************ALGORITHM**************
-if($_SESSION['username'] != ''){
-  $pref1 = $_SESSION['pref1'];
+if($_SESSION['username'] != ''){ //Check if user is logged in
+  $pref1 = $_SESSION['pref1']; //receive preferences from already stored session variables
   $pref2 = $_SESSION['pref2'];
   $pref3 = $_SESSION['pref3'];
   $age = $_SESSION['age'];
-  $sql = "SELECT * FROM events WHERE ( category = '$pref1' OR category = '$pref2' OR category = '$pref3') AND age <= '$age'";
-  $result = $mysqli->query($sql);
+  $sql = "SELECT * FROM events WHERE (category = '$pref1') OR (category = '$pref2') OR (category = '$pref3') AND (age <= '$age')"; //query for events based off user criteria
+  $result = $mysqli->query($sql); //query
 }else{
-  $sql = "SELECT * FROM events";
+  $sql = "SELECT * FROM events"; //if no user logged in, receive all results
   $result = $mysqli->query($sql);
 }
 
 
 
 include 'includes/nav.php';
-?>
 
+?>
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	
@@ -101,10 +60,9 @@ include 'includes/nav.php';
     				</div>
     				<input id="submit" type="submit" class="btn btn-primary" value="Search">
     			</form>
-    			
-    			
             <div class="container">
         <div class="row">
+    <!-- create dynamic modals
     <?php
         if (mysqli_num_rows($result) > 0) {
             // output data of each row
@@ -149,7 +107,7 @@ include 'includes/nav.php';
                               </div>
                             </div>
                             <div class="modal-footer">
-                              <form method="post" action="purchaseEvent.php">
+                              <form method="post" action="purchaseEvent.php" class="buttonForm">
                                 <input type="hidden" name="value" value="<?php echo $row["event_id"];?>">
                                 <input type="submit" class="btn btn-danger" name="submit" value="Purchase">
                               </form>
@@ -170,5 +128,7 @@ include 'includes/nav.php';
   <?php
 include 'includes/footer.php';
 ?>
+
+
 </body>
 </html>

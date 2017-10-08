@@ -13,6 +13,7 @@ include 'includes/nav.php';
 6. email maybe?
 */
 
+//check to see if Session username is not empty
 if(!empty($_SESSION['username'])) {
 
     $servername = getenv('IP');
@@ -21,7 +22,7 @@ if(!empty($_SESSION['username'])) {
     $database = "id2769518_testdb";
     $dbport = 3306;
 
-    // Create connection
+    // Create db connection
     $mysqli = new mysqli($servername, $dbusername, $dbpassword, $database, $dbport);
 
     //get user id based of session username
@@ -30,12 +31,15 @@ if(!empty($_SESSION['username'])) {
     //declare variable prior to loop so variable can be called later
     $user = "";
 
+    //loop through results
     while ($row = mysqli_fetch_array($sqlget)) {
-    	$user .= $row['id'];//THESE CHANGE 
+    	$user .= $row['id'];
     }
 
+    //store value from index.php which calls the event id
     $event = $_POST['value'];
     
+    //query to get event name
     $getevent = $mysqli->query("SELECT name FROM events WHERE event_id = $event");
     
     $eventname = "";
@@ -44,7 +48,21 @@ if(!empty($_SESSION['username'])) {
     	$eventname .= $row['name'];//THESE CHANGE 
     }
     
+    //insert purchase into database
     $insert = $mysqli->query("INSERT INTO history (id, event_id, date) VALUES ($user, $event, now())");
+    
+    //get email
+    $email = $mysqli->query("SELECT email FROM users WHERE id = $user");
+    
+    $useremail = "";
+
+    //loop through results
+    while ($row = mysqli_fetch_array($email)) {
+    	$useremail .= $row['email'];
+    }
+    
+    //email user tickets
+    mail($useremail, "Your purchased tickets", "Tickets");
     
     echo "<br>";
     echo "<br>";

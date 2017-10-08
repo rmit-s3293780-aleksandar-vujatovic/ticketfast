@@ -10,6 +10,7 @@
 			<input type="hidden" name="link" value="';
 	?>
 	<?php
+		//if statement to check if query string is set, if it is, pass it via hidden value
 		if (isset($_GET["link"])) {
 			echo $_GET["link"];
 			}

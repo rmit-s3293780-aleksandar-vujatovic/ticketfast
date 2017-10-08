@@ -1,7 +1,6 @@
 
-<html>
 <head>
-	<title>Modal Dynamic Content</title>
+	<title>Search Results</title>
 <body>
 
     <?php
@@ -21,12 +20,15 @@ $servername = getenv('IP');
         if (!$conn) {
             die("Connection failed: " . mysqli_connect_error());
         }
+        
+        $searchq = $_SESSION['searchQuery'];
 
-        $sql = "SELECT * FROM events";
+        $sql = "SELECT * FROM events WHERE (name LIKE '%$searchq%') OR (category LIKE '%$searchq%')";
+        
         $result = mysqli_query($conn, $sql);
-        include 'includes/nav.php';
+       include 'includes/nav.php';
     ?>
-        <div class="container" style="margin-top:30px;">
+            <div class="container">
         <div class="row">
     <?php
         if (mysqli_num_rows($result) > 0) {
@@ -34,6 +36,7 @@ $servername = getenv('IP');
             while($row = mysqli_fetch_assoc($result)) {
     ?>
                      <div class="col-lg-3" style="margin-top:40px;">
+                       <h4 class="modal-title"><?php echo $row['name']; ?></h4>
                          <a href="#" data-toggle="modal" data-target="#<?php echo $row["event_id"]; ?>"><img src="data:image/jpeg;base64,<?php echo base64_encode($row["image"]); ?>" class="img-responsive"></a>
                      </div>
                      <!-- Modal -->
@@ -52,28 +55,42 @@ $servername = getenv('IP');
                                       <img src="data:image/jpeg;base64,<?php echo base64_encode($row["image"]); ?>" class="img-responsive">
                                   </div>
                                   <div class="col-lg-6">
-                                      <p><?php echo $row["description"] ?><p>
-
+                                      <h5><?php echo $row["description"] ?><h5>
+                                  </div>
+                                  <div class="col-lg-6">
+                                      <h5>Price: <?php echo $row["price"] ?><h5>
+                                  </div>
+                                    <div class="col-lg-6">
+                                      <h5>Minimum Age: <?php 
+                                      if($row["age"] != 0){
+                                      echo $row["age"];
+                                      }else{
+                                      echo "No Minimum Age";
+                                      }?><h5>
+                                  </div>
+                                  <div class="col-lg-6">
+                                      <h5>Category: <?php echo $row["category"] ?><h5>
                                   </div>
                               </div>
                             </div>
                             <div class="modal-footer">
-                              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                              <form method="post" action="purchaseEvent.php">
+                                <input type="hidden" name="value" value="<?php echo $row["event_id"];?>">
+                                <input type="submit" class="btn btn-danger" name="submit" value="Purchase">
+                              </form>
                             </div>
                           </div>
                           
                         </div>
-                      </div>
-    <?php
-
-
-        }
+                      </div>		
+                          <?php
+                  }
         } else {
             echo "0 results";
         }
     ?>
-        </div>
-        </div>
+                      </div>
+                      </div>
     <?php
 
             mysqli_close($conn);
@@ -82,4 +99,3 @@ $servername = getenv('IP');
 
 
 </body>
-</html>

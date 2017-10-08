@@ -96,11 +96,7 @@ textarea {
 .loginForm{
   display: block;
 }
-
-.loggedIn{
-  display: none; /*hidden by default */
-}
-    
+  
 .fp{
   inline-size: -webkit-fill-available;
   text-align: right;
@@ -113,4 +109,10 @@ textarea {
     
 .eventtd {
   width:20em;
+}
+.buttonForm{
+  text-align:right !important;
+  width: 100% !Important;
+  padding:0px !Important;
+  
 }

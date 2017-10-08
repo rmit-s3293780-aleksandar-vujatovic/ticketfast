@@ -18,19 +18,22 @@ $servername = getenv('IP');
     } 
     echo "Connected successfully (".$mysqli->host_info.")"; */
     
-    //$queryUser = echo "SELECT username FROM users WHERE username = \"$username\"\;";
+    //checking if form has been completed
     if ($_SERVER['REQUEST_METHOD'] == 'POST'){
       //passwords match
           $username = $mysqli->real_escape_string($_POST['username']);
-          
-    //$queryUser = mysql_query("SELECT username FROM users WHERE username= '$username'");
-
-      /*if(mysql_num_rows($queryUser)>=1){
+          //query for username entered
+    $queryUser = mysqli_query($mysqli, "SELECT username FROM users WHERE username= '$username'"); 
+    
+      //if username exists display message
+      if(mysqli_num_rows($queryUser)>=1){
         $_SESSION['message'] = 'Username already exists!';
-      }else{*/
+      }
+      //if username does not exist, confirm entered passwords match
+      else{
       if($_POST['password'] == $_POST['confirmpassword']){
         
-        
+        //assign entered values into variables
         $email = $mysqli->real_escape_string($_POST['email']);
         $password = md5($_POST['password']); //md5 hashes password
         $password2 = ($_POST['password']);
@@ -42,6 +45,7 @@ $servername = getenv('IP');
         $age = ($_POST['age']);
         $userType = 'user';
         
+        //store values into session variables to be passed from page
         $_SESSION['username'] = $username;
         $_SESSION['password'] = $password2;
         $_SESSION['fname'] = $fname;
@@ -51,7 +55,7 @@ $servername = getenv('IP');
         $_SESSION['pref2'] = $pref2;
         $_SESSION['pref3'] = $pref3;
         
-        
+        //insert new user
         $sql = "INSERT INTO users (username, email, fname, lname, password, pref1, pref2, pref3, age, userType)"
         . "VALUES ('$username', '$email', '$fname', '$lname', '$password', '$pref1', '$pref2', '$pref3', '$age', '$userType')";
         
@@ -59,7 +63,7 @@ $servername = getenv('IP');
         
       if ($mysqli->query($sql) === true){
         $_SESSION['message'] = 'ADDED USER TO DATABASE';
-        header("location: index.php");
+        header("location: registerThanks.php"); //redirect user upon successful registration
       }
       else{
         $_SESSION['message'] = 'FAILED TO ADD';
@@ -69,7 +73,7 @@ $servername = getenv('IP');
         $_SESSION['message'] = 'Passwords don\'t match!';
       }
       }
-   // }
+   }
 include 'includes/nav.php';
 ?>
 
@@ -206,24 +210,3 @@ include 'includes/footer.php';
       $(".visible").css('display', 'block');
 </script>
 <?php endif; ?>
-
-  <script>
-  $( function() {
-    $( "#datepicker" ).datepicker({
-      changeMonth: true,
-      changeYear: true,
-      dateFormat: 'yy-mm-dd',
-      
-onSelect: function (date) {
-         var dob = new Date(date);
-         var today = new Date();
-         var age = today.getFullYear() - dob.getFullYear();
-         
-         $.post('register.php', {variable: age});
-
-        console.log(age);
-    }
-
-  });
-});
-  </script>
